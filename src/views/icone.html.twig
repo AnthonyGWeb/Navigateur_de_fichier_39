@@ -1,0 +1,13 @@
+{% if file.type == 'directory' %}
+	<i class="fa fa-folder"></i>
+{% elseif file.type == 'image/jpeg' %}
+	<i class="fa fa-file-image-o"></i>
+{% elseif file.type == 'application/pdf' %}
+	<i class="fa fa-file-pdf-o"></i>
+{% elseif file.type == 'text/plain' %}
+	<i class="fa fa-file-text-o"></i>
+{% elseif file.type == 'text/x-php' %}
+	<i class="fa fa-file-code-o"></i>
+{% else %}
+	<i class="fa fa-file-o"></i>
+{% endif %}

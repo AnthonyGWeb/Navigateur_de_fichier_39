@@ -1,0 +1,92 @@
+<!doctype html>
+<html class="no-js" lang="fr">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="stylesheet" href="src/assets/css/normalize.min.css">
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="src/assets/css/main.css">
+
+        <script src="src/assets/js/vendor/modernizr-2.8.3.min.js"></script>
+    </head>
+    <body>
+        <!--[if lt IE 8]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+
+        <main class="clearfix">
+
+{# ********************************************************* 
+                    LISTING DOSSIER
+********************************************************* #}
+            <section class="dossier-principal">
+                <h2></h2>
+
+                <ul>
+                    <li>{{actualDir}}</li>
+                    <ul>
+                    {% for file in filesDirectory %}
+                        {% if file.type == 'directory' %}
+                        <li>
+                            <i class="fa fa-level-up reverse"></i>
+                            {% include 'icone.html.twig' %}
+                            <a href="?tree={{chemin ~ file.name}}" alt="{{file}}">
+                                {{file.name}}
+                            </a>
+                        </li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+                </ul>
+            </section>
+
+{# ********************************************************* 
+                    LISTING FICHIER
+********************************************************* #}
+            <section class="contenu-dossier">
+                <h2>{{chemin}}</h2>
+
+                <ul>
+                    <li>
+
+                    </li>
+
+                    {% for file in filesDirectory %}
+                        {# {% if file.type != 'directory' or file.name == '..' %} #}
+                        <li>
+                            {% if file.type == 'directory' %}
+                             <a href="?tree={{chemin ~ file.name}}" alt="{{file}}" title="{{file.type}}" class="clearfix">
+                            {% else %}
+
+
+{# ?file={{chemin ~ file.name}}&amp;type={{file.type}} #}
+
+                             <a href="" alt="{{file}}" title="{{file.type}}" class="clearfix" data-link-file data-file ="?file={{chemin ~ file.name}}">
+                            {% endif %}
+                           
+                                {% include 'icone.html.twig' %}
+                                {{file.name}}
+
+                                <ul class="file-info">
+                                    <li>{{file.time}}</li>
+                                    <li>{{file.size}}</li>
+                                </ul>
+                            </a>
+                        </li>
+                        {# {% endif %} #}
+                    {% endfor %}
+                </ul>                
+            </section>
+        </main>
+
+
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="src/assets/js/vendor/jquery-1.11.2.min.js"><\/script>')</script>
+
+        <script src="src/assets/js/main.js"></script>
+    </body>
+</html>
