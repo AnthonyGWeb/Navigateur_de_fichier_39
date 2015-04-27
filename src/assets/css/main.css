@@ -110,6 +110,18 @@ main .contenu-dossier ul a:hover {
     color: #2E9AFE;
 }
 
+main .contenu-dossier ul .line-file:hover ul li:first-of-type {
+    display: block;
+}
+
+.drop-state-hover {
+    background: #848484;
+}
+
+.drop-state-active {
+    color: #2E9AFE;
+}
+
 /*****************************************************
                     STRUCTURE
 *****************************************************/
@@ -148,6 +160,20 @@ main section {
     padding: 0 10px 50px 10px;    
 }
 
+.error {
+    margin-top: 10px;
+    padding: 0 15px;
+    border: 2px solid #FF0000;
+    background: #FA5858;
+}
+
+.information {
+    margin-top: 10px;
+    padding: 0 15px;
+    border: 2px solid #04B431;
+    background: #82FA58;
+}
+
 /*****************************************************
                     LAYOUT
 *****************************************************/
@@ -169,6 +195,11 @@ main section {
     z-index: 11;
 }
 
+.display-image .close-image {
+    font-size: 160%;
+    color: red;
+}
+
 /*****************
 DOSIEER PRINCIPAL
 ************/
@@ -184,25 +215,42 @@ main .dossier-principal ul i {
 CONTENU DOSSIER
 ***********/
 
-main .contenu-dossier ul a {
+main .contenu-dossier ul .line-file > a {
     box-sizing: border-box;
     display: block;
     padding: 5px 15px;
 }
 
-main .contenu-dossier ul a ul {
-    display: inline-block;
+main .contenu-dossier > ul > li {
+    position: relative;
+}
+
+main .contenu-dossier ul .line-file ul {
+    position: absolute;
+    top: 5px;
+    right: 10px;
     float: right;
 }
 
-main .contenu-dossier ul a ul li {
-    display: inline-block;
+main .contenu-dossier ul .line-file ul li {
+    float: left;
 }
 
-main .contenu-dossier ul a ul li:last-child {
-    width: 100px;
-    text-align: right;
+main .contenu-dossier ul .line-file ul li:first-of-type {
+    display: none;
+    margin-right: 20px;
 }
+
+main .contenu-dossier ul .line-file ul li:last-child {
+    text-align: right;
+    width: 80px;
+}
+
+
+
+
+
+
 
 
 

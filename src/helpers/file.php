@@ -7,6 +7,7 @@ abstract class File
 	*************************************/
 	static function formatSize($file)
 	{
+		$size = 'N-A';
 
 		if (filesize($file) > 0) {
 			$size = (int) filesize($file) . ' o';
@@ -32,10 +33,38 @@ abstract class File
 	*************************************/
 	static function fileType($file)
 	{
+		$type = null;
+
 		$finfo = finfo_open(FILEINFO_MIME_TYPE);
 		$type = finfo_file($finfo, $file);
+
 		finfo_close($finfo);
 
 		return $type;
+	}
+
+	/*************************************
+			CREATION D UN FICHIER
+	*************************************/
+	static function createFolder($nameFolder)
+	{
+		if (mkdir($nameFolder, 0744)) {
+			return true;
+		}
+
+		return false;
+	}
+
+	/*************************************
+		Deplacement D UN FICHIER ou dossier
+	*************************************/
+	static function moveFile($old, $new)
+	{
+		if (rename($old, $new)) {
+			return true;
+
+		}
+
+		return false;
 	}
 }

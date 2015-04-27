@@ -34,7 +34,7 @@
                         <li>
                             <i class="fa fa-level-up reverse"></i>
                             {% include 'icone.html.twig' %}
-                            <a href="?tree={{chemin ~ file.name}}" alt="{{file}}">
+                            <a href="?tree={{chemin ~ file.name}}">
                                 {{file.name}}
                             </a>
                         </li>
@@ -48,36 +48,51 @@
                     LISTING FICHIER
 ********************************************************* #}
             <section class="contenu-dossier">
+
+                {% if msgInfo %}
+                    <div class="information">
+                        {% for msg in msgInfo %}
+                            <p>{{ msg }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                {% if msgAlert %}
+                    <div class="error">
+                        {% for msg in msgAlert %}
+                            <p>{{ msg }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+
+
                 <h2>{{chemin}}</h2>
+                <p>
+                    <a href="http://localhost/file_browser"><i class="fa fa-home"></i> Accueil</a> | 
+                    <a id="new-folder" href="#">Nouveau dossier</a>
+                </p>
 
                 <ul>
-                    <li>
-
-                    </li>
-
                     {% for file in filesDirectory %}
-                        {# {% if file.type != 'directory' or file.name == '..' %} #}
-                        <li>
+                        <li class="line-file">
                             {% if file.type == 'directory' %}
-                             <a href="?tree={{chemin ~ file.name}}" alt="{{file}}" title="{{file.type}}" class="clearfix">
+                             <a class="draggable droppable" href="?tree={{chemin ~ file.name}}" title="{{file.type}}" class="clearfix" data-url="{{chemin ~ file.name}}" data-file-name="{{file.name}}">
                             {% else %}
 
-
-{# ?file={{chemin ~ file.name}}&amp;type={{file.type}} #}
-
-                             <a href="" alt="{{file}}" title="{{file.type}}" class="clearfix" data-link-file data-file ="?file={{chemin ~ file.name}}">
+                             <a class="draggable" href="" title="{{file.type}}" class="clearfix" data-link-file data-file="?file={{chemin ~ file.name}}" data-url="{{chemin ~ file.name}}" data-file-name="{{file.name}}">
                             {% endif %}
                            
                                 {% include 'icone.html.twig' %}
                                 {{file.name}}
 
-                                <ul class="file-info">
+                                <ul class="file-info clearfix">
+                                 <li><a href="?delete={{chemin ~ file.name}}"><i class="fa fa-trash-o"></i></a></li>
                                     <li>{{file.time}}</li>
                                     <li>{{file.size}}</li>
                                 </ul>
                             </a>
                         </li>
-                        {# {% endif %} #}
                     {% endfor %}
                 </ul>                
             </section>
@@ -86,7 +101,9 @@
 
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="src/assets/js/vendor/jquery-1.11.2.min.js"><\/script>')</script>
+        <script src="src/assets/js/vendor/jqueryUi/jquery-ui.min.js"></script>
 
+        <script src="src/assets/js/open_file.js"></script>
         <script src="src/assets/js/main.js"></script>
     </body>
 </html>

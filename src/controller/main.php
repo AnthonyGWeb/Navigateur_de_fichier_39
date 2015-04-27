@@ -2,6 +2,8 @@
 final class MainController extends Controller
 {
 	private $headers = array('Content-Type: text/html; charset=utf-8');
+	private $messagesInformations = array();
+	private $messagesAlertes = array();
 
 	public function directoryAction()
 	{
@@ -10,6 +12,22 @@ final class MainController extends Controller
 					Repertoire courant
 		*******************************************/
 		$dir = (isset($this->get['tree'])) ? $this->get['tree'] : __ROOT_DIR__ ;
+		
+		/*******************************************
+				Creation d'un nouveau dossier
+		*******************************************/
+		if (isset($this->get['new_folder'])) {
+
+			$pathFolder = $dir. '/' . $this->get['new_folder'];
+echo $pathFolder;
+			if (File::createFolder($pathFolder)) {
+				$this->messagesInformations[] = 'Dossier : ' . $this->get['new_folder']. ' crée'; 
+			}
+			else {
+				$this->messagesAlertes[] = 'Impossible de créer le dossier : ' . $this->get['new_folder'];
+			}
+		}
+
 
 		/*******************************************
 					
@@ -22,6 +40,8 @@ final class MainController extends Controller
 					'actualDir' => basename($dir) . '/',
 					'chemin' => realpath($dir) . '/',
 					'filesDirectory' => $filesDirectory,
+					'msgInfo' => $this->messagesInformations,
+					'msgAlert' => $this->messagesAlertes,
 				)),
 		);
 	}
@@ -101,5 +121,46 @@ final class MainController extends Controller
 
 		 //die(var_dump($file));
 		return $filesDirectory;
+	}
+
+	public function deleteAction()
+	{
+		if (isset($this->get['delete'])) {
+
+			if (is_dir($this->get['delete'])) {
+
+				if (rmdir($this->get['delete'])) {
+					$this->messagesInformations[] = "Dossier suprimé"; 
+				}
+				else {
+					$this->messagesAlertes[] = "Impossible de supprimer le dossier";
+				}
+
+			}
+			else {
+
+				if (unlink($this->get['delete'])) {
+					$this->messagesInformations[] = "Fichier suprimé"; 
+				}
+				else {
+					$this->messagesAlertes[] = "Impossible de supprimer le fichier";
+				}
+			}
+			
+		}
+
+		return $this->directoryAction();
+	}
+
+	public function moveAction()
+	{
+		/*******************************************
+				Déplacement d'un fichier
+		*******************************************/
+		if (isset($this->post['destination'])) {
+			
+			$result = File::moveFile($this->post['oldPath'], $this->post['destination']);
+			var_dump($result);
+		}
 	}
 }

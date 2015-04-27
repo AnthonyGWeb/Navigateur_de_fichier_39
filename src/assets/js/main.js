@@ -1,49 +1,58 @@
 $(document).ready(function() {
-	//linkArray = $('a[data-link-file]');
 
-	$('a[data-link-file]').click(function() {
-		
-		var url = $(this).data('file'); //url pour
+	$('a[data-link-file]').click(openFile);
 
-		/********************************************
-			Test des fichiers pouvant être afficher directement
-		********************************************/
-		if ($(this).attr('title').match(/^image/)) {
-			$('main').prepend('<div class="display-image"><img src="' + url + '"></div>');
+	$('#new-folder').click(function(){
+		var nameFolder = window.prompt('Nom du dossier :');
+		var url = document.location.href;
 
-			return false;
+		if (url.match(/\?/)) {
+			$(location).attr('href', url + '&new_folder=' + nameFolder);
 		}
+		else {
 
-		$.ajax({
-			type: 'GET',
-			url: url,
-			complete: function(xhr, status) {
-				var func = funcHeader(xhr.getResponseHeader("content-type"));
-				handleResponse[func](xhr.responseText);
-				//console.log(func);
-				//console.log(xhr.responseText);
-				// mettre les data dans une div
-			}
-		});
-		return false;
+			$(location).attr('href', url + '?new_folder=' + nameFolder);
+		}
 	});
 
-//	console.log(linkArray);
+	dragAndDrop();
+
 });
 
-var funcHeader = function(header) {
-	var funcArray = {
-		'^text/': 'editor'
-	};
-	for(var i in funcArray) {
-		if (header.match(i)) {
-			return funcArray[i];
-		}
-	}
-};  
+var dragAndDrop = function() {
+		/******************************************************
+		DRAG AND DROP
+	********************************************************/
+	$( ".draggable" ).draggable({
+		revert: "invalid",
+		helper: 'clone'
+	});
 
-var handleResponse = {
-	editor: function(data) {
-		console.log(data);
-	}
-};
+    $( ".droppable" ).droppable({
+    	activeClass: "drop-state-active",
+    	hoverClass: "drop-state-hover",
+    	drop: function( event, ui ) {
+			
+    		var fileDrag = ui.draggable[0].getAttribute('data-file-name');
+
+    		var destination = this.getAttribute('data-url') + '/' + fileDrag;
+
+    		var oldPath = ui.draggable[0].getAttribute('data-url');
+
+    		var url = this.getAttribute('href');
+
+			$.ajax({
+				type: 'POST',
+				url: '?moveFile=true',
+				data: {
+					drag: true,
+					destination: destination,
+					oldPath: oldPath
+				},
+				success: function(){
+					$(location).attr('href', url);
+				}
+			});
+		}
+    });
+}
