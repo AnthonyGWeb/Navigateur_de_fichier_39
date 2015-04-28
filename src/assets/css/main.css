@@ -224,7 +224,7 @@ main section {
     z-index: 11;
 }
 
-.display-image .close-image {
+.close-image {
     font-size: 160%;
     color: red;
 }

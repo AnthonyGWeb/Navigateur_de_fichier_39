@@ -6,12 +6,15 @@ $(document).ready(function() {
 		var nameFolder = window.prompt('Nom du dossier :');
 		var url = document.location.href;
 
-		if (url.match(/\?/)) {
-			$(location).attr('href', url + '&new_folder=' + nameFolder);
-		}
-		else {
+console.log(typeof nameFolder);
 
-			$(location).attr('href', url + '?new_folder=' + nameFolder);
+		if (nameFolder != null) {
+			if (url.match(/\?/)) {
+				$(location).attr('href', url + '&new_folder=' + nameFolder);
+			}
+			else {
+				$(location).attr('href', url + '?new_folder=' + nameFolder);
+			}
 		}
 	});
 
