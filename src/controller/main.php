@@ -5,6 +5,11 @@ final class MainController extends Controller
 	private $messagesInformations = array();
 	private $messagesAlertes = array();
 
+	public function __destruct() {
+
+		$_SESSION['messagesInformations'] = $this->session['messagesInformations'];
+	}
+
 	public function directoryAction()
 	{
 
@@ -18,10 +23,10 @@ final class MainController extends Controller
 		*******************************************/
 		if (isset($this->get['new_folder'])) {
 
-			$pathFolder = $dir. '/' . $this->get['new_folder'];
-echo $pathFolder;
+			$pathFolder = $dir . '/' . $this->get['new_folder'];
+
 			if (File::createFolder($pathFolder)) {
-				$this->messagesInformations[] = 'Dossier : ' . $this->get['new_folder']. ' crée'; 
+				$this->messagesInformations[] = 'Dossier : ' . $this->get['new_folder'] . ' crée'; 
 			}
 			else {
 				$this->messagesAlertes[] = 'Impossible de créer le dossier : ' . $this->get['new_folder'];
@@ -34,16 +39,23 @@ echo $pathFolder;
 		*******************************************/
 		$filesDirectory = $this->getFilesDirectory($dir);
 
-		return array(
+var_dump($this->session['messagesInformations']);
+// die(var_dump($this->session['messagesInformations']));
+		
+		$result = array(
 			'headers' => $this->headers,
 			'content' => $this->twig->render('directory.html.twig', array(
 					'actualDir' => basename($dir) . '/',
 					'chemin' => realpath($dir) . '/',
 					'filesDirectory' => $filesDirectory,
-					'msgInfo' => $this->messagesInformations,
+					'msgInfo' => $this->session['messagesInformations'],
 					'msgAlert' => $this->messagesAlertes,
 				)),
 		);
+
+		$this->session['messagesInformations'] = array();
+
+		return $result;
 	}
 
 	public function fileAction()
@@ -106,13 +118,11 @@ echo $pathFolder;
 					'children' => false,
 				);
 
-				if ($type == 'directory' && 
-					$file['name'] != '..') {
-					//echo 'fichier : ' . $file['name'] . '<br>';
-					//$file['children'] = $this->getFilesDirectory($dir . '/' . $file['name']);
-
-
-				}
+				// if ($type == 'directory' && 
+				// 	$file['name'] != '..') {
+				// 	//echo 'fichier : ' . $file['name'] . '<br>';
+				// 	//$file['children'] = $this->getFilesDirectory($dir . '/' . $file['name']);
+				// }
 
 			} else {
 				unset($filesDirectory[$key]);
@@ -130,7 +140,7 @@ echo $pathFolder;
 			if (is_dir($this->get['delete'])) {
 
 				if (rmdir($this->get['delete'])) {
-					$this->messagesInformations[] = "Dossier suprimé"; 
+					$this->session['messagesInformations'][] = "Dossier suprimé";
 				}
 				else {
 					$this->messagesAlertes[] = "Impossible de supprimer le dossier";
@@ -140,7 +150,7 @@ echo $pathFolder;
 			else {
 
 				if (unlink($this->get['delete'])) {
-					$this->messagesInformations[] = "Fichier suprimé"; 
+					$this->session['messagesInformations'][] = "Fichier suprimé"; 
 				}
 				else {
 					$this->messagesAlertes[] = "Impossible de supprimer le fichier";
@@ -149,7 +159,7 @@ echo $pathFolder;
 			
 		}
 
-		return $this->directoryAction();
+		//return $this->directoryAction();
 	}
 
 	public function moveAction()

@@ -15,14 +15,35 @@ $(document).ready(function() {
 		}
 	});
 
+	$('.delete-file').click(function() {
+		
+		var link = $(this).data('url');
+		var url = document.location.href;
+		
+		var reponse = window.confirm('Supprimer : ' + link + ' ?');
+
+		if (reponse) {
+			$.ajax({
+				type: 'GET',
+				url: '?delete=' + link,
+				success: function() {
+					$(location).attr('href', url);
+				}
+			});
+		}
+	});
+	
+
 	dragAndDrop();
 
 });
 
+
+/******************************************************
+	DRAG AND DROP
+********************************************************/
 var dragAndDrop = function() {
-		/******************************************************
-		DRAG AND DROP
-	********************************************************/
+
 	$( ".draggable" ).draggable({
 		revert: "invalid",
 		helper: 'clone'

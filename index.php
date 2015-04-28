@@ -7,5 +7,8 @@ require_once __ROOT_DIR__ . '/src/controller/main.php';
 require_once __ROOT_DIR__ . '/vendor/autoload.php';
 require_once __ROOT_DIR__ . '/src/helpers/file.php';
 
-$ctrl = new MainController($_POST, $_GET, $_SERVER);
+//error_reporting(0); // Pour masquer les erreurs de script
+session_start();
+
+$ctrl = new MainController($_POST, $_GET, $_SESSION, $_SERVER);
 $ctrl->handleRequest();

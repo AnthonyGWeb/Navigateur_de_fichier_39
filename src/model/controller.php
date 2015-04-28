@@ -3,15 +3,20 @@ abstract class Controller
 {
 	protected $get;
 	protected $post;
+	protected $session;
 	protected $server;
 	protected $routing;
 	protected $twig;
 
-	public function __construct($post, $get, $server)
+	public function __construct($post, $get, $session, $server)
 	{
 		$this->setGet($get)
 			 ->setPost($post)
+			 ->setSession($session)
 			 ->setServer($server);
+
+		// $this->session['messagesInformations'] = array();
+		// $this->session['messagesAlertes'] = array();
 
 		$this->routing = new Routing();
 		$loader = new Twig_Loader_Filesystem(__ROOT_DIR__ . '/src/views/');
@@ -34,6 +39,11 @@ abstract class Controller
 	public function getGet()
 	{
 		return $this->get;
+	}
+
+	public function getSession()
+	{
+		return $this->session;
 	}
 
 	public function getServer()
@@ -63,6 +73,12 @@ abstract class Controller
 	public function setGet(array $data)
 	{
 		$this->get = $data;
+		return $this;
+	}
+
+	public function setSession(array $data)
+	{
+		$this->session = $data;
 		return $this;
 	}
 		

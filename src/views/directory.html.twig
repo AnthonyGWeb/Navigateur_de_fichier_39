@@ -9,6 +9,8 @@
 
         <link rel="stylesheet" href="src/assets/css/normalize.min.css">
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="src/assets/js/vendor/prism/prism.css">
+
         <link rel="stylesheet" href="src/assets/css/main.css">
 
         <script src="src/assets/js/vendor/modernizr-2.8.3.min.js"></script>
@@ -19,7 +21,25 @@
         <![endif]-->
 
         <main class="clearfix">
+            <nav>
+                <ul>
+                    <li>
+                        <a href=""><i class="fa fa-bars"></i></a>
+                    </li>
 
+                    <li>
+                        <a href="http://localhost/file_browser"><i class="fa fa-home"></i></a>
+                    </li>
+
+                    <li>
+                        <a href=""><i class="fa fa-upload"></i></a>
+                    </li>
+
+                    <li>
+                        <a id="new-folder" href="#">Nouveau dossier</a>
+                    </li>
+                </ul>
+            </nav>
 {# ********************************************************* 
                     LISTING DOSSIER
 ********************************************************* #}
@@ -68,10 +88,6 @@
 
 
                 <h2>{{chemin}}</h2>
-                <p>
-                    <a href="http://localhost/file_browser"><i class="fa fa-home"></i> Accueil</a> | 
-                    <a id="new-folder" href="#">Nouveau dossier</a>
-                </p>
 
                 <ul>
                     {% for file in filesDirectory %}
@@ -87,7 +103,7 @@
                                 {{file.name}}
 
                                 <ul class="file-info clearfix">
-                                 <li><a href="?delete={{chemin ~ file.name}}"><i class="fa fa-trash-o"></i></a></li>
+                                 <li><a class="delete-file" href="" data-url="{{chemin ~ file.name}}"><i class="fa fa-trash-o"></i></a></li>
                                     <li>{{file.time}}</li>
                                     <li>{{file.size}}</li>
                                 </ul>
@@ -102,6 +118,11 @@
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="src/assets/js/vendor/jquery-1.11.2.min.js"><\/script>')</script>
         <script src="src/assets/js/vendor/jqueryUi/jquery-ui.min.js"></script>
+
+<script src="src/assets/js/vendor/prism/prism.js"></script>
+
+
+
 
         <script src="src/assets/js/open_file.js"></script>
         <script src="src/assets/js/main.js"></script>
