@@ -2,12 +2,12 @@
 final class MainController extends Controller
 {
 	private $headers = array('Content-Type: text/html; charset=utf-8');
-	private $messagesInformations = array();
-	private $messagesAlertes = array();
+	// private $messagesInformations = array();
+	// private $messagesAlertes = array();
 
 	public function __destruct() {
 
-		$_SESSION['messagesInformations'] = $this->session['messagesInformations'];
+		// $_SESSION['messagesInformations'] = $this->session['messagesInformations'];
 	}
 
 	public function directoryAction()
@@ -26,10 +26,10 @@ final class MainController extends Controller
 			$pathFolder = $dir . '/' . $this->get['new_folder'];
 
 			if (File::createFolder($pathFolder)) {
-				$this->messagesInformations[] = 'Dossier : ' . $this->get['new_folder'] . ' crée'; 
+				// $this->messagesInformations[] = 'Dossier : ' . $this->get['new_folder'] . ' crée'; 
 			}
 			else {
-				$this->messagesAlertes[] = 'Impossible de créer le dossier : ' . $this->get['new_folder'];
+				// $this->messagesAlertes[] = 'Impossible de créer le dossier : ' . $this->get['new_folder'];
 			}
 		}
 
@@ -39,7 +39,7 @@ final class MainController extends Controller
 		*******************************************/
 		$filesDirectory = $this->getFilesDirectory($dir);
 
-var_dump($this->session['messagesInformations']);
+// var_dump($this->session['messagesInformations']);
 // die(var_dump($this->session['messagesInformations']));
 		
 		$result = array(
@@ -48,8 +48,6 @@ var_dump($this->session['messagesInformations']);
 					'actualDir' => basename($dir) . '/',
 					'chemin' => realpath($dir) . '/',
 					'filesDirectory' => $filesDirectory,
-					'msgInfo' => $this->session['messagesInformations'],
-					'msgAlert' => $this->messagesAlertes,
 				)),
 		);
 
@@ -140,20 +138,20 @@ var_dump($this->session['messagesInformations']);
 			if (is_dir($this->get['delete'])) {
 
 				if (rmdir($this->get['delete'])) {
-					$this->session['messagesInformations'][] = "Dossier suprimé";
+					// $this->session['messagesInformations'][] = "Dossier suprimé";
 				}
 				else {
-					$this->messagesAlertes[] = "Impossible de supprimer le dossier";
+					// $this->messagesAlertes[] = "Impossible de supprimer le dossier";
 				}
 
 			}
 			else {
 
 				if (unlink($this->get['delete'])) {
-					$this->session['messagesInformations'][] = "Fichier suprimé"; 
+					// $this->session['messagesInformations'][] = "Fichier suprimé"; 
 				}
 				else {
-					$this->messagesAlertes[] = "Impossible de supprimer le fichier";
+					// $this->messagesAlertes[] = "Impossible de supprimer le fichier";
 				}
 			}
 			
@@ -170,7 +168,7 @@ var_dump($this->session['messagesInformations']);
 		if (isset($this->post['destination'])) {
 			
 			$result = File::moveFile($this->post['oldPath'], $this->post['destination']);
-			var_dump($result);
+			// var_dump($result);
 		}
 	}
 }
