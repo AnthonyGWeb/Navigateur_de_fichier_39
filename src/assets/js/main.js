@@ -6,7 +6,7 @@ $(document).ready(function() {
 		var nameFolder = window.prompt('Nom du dossier :');
 		var url = document.location.href;
 
-console.log(typeof nameFolder);
+// console.log(typeof nameFolder);
 
 		if (nameFolder != null) {
 			if (url.match(/\?/)) {
@@ -21,8 +21,8 @@ console.log(typeof nameFolder);
 	$('.delete-file').click(function() {
 		
 		var link = $(this).data('url');
-		var url = document.location.href;
-		
+		var url = $(location).attr('href');
+
 		var reponse = window.confirm('Supprimer : ' + link + ' ?');
 
 		if (reponse) {

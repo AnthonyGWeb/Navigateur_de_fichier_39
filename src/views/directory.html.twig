@@ -101,13 +101,17 @@
                            
                                 {% include 'icone.html.twig' %}
                                 {{file.name}}
-
-                                <ul class="file-info clearfix">
-                                 <li><a class="delete-file" href="" data-url="{{chemin ~ file.name}}"><i class="fa fa-trash-o"></i></a></li>
-                                    <li>{{file.time}}</li>
-                                    <li>{{file.size}}</li>
-                                </ul>
                             </a>
+
+                            <ul class="file-info clearfix">
+                             <li>
+                                <button class="delete-file" data-url="{{chemin ~ file.name}}">
+                                    <i class="fa fa-trash-o"></i>
+                                </button>{# 
+                                <a class="delete-file" href="" data-url="{{chemin ~ file.name}}"><i class="fa fa-trash-o"></i></a> #}</li>
+                                <li>{{file.time}}</li>
+                                <li>{{file.size}}</li>
+                            </ul>
                         </li>
                     {% endfor %}
                 </ul>                

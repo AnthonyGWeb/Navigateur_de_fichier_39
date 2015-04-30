@@ -108,7 +108,7 @@ main section {
 /******************
 CONTENU DOSSIER
 *******/
-main .contenu-dossier ul a {
+main .contenu-dossier > ul > li {
     border-bottom: 1px solid #ccc;
 }
 
@@ -123,13 +123,25 @@ main nav ul li a:hover {
     color: #4ECCC3;
 }
 
-main .contenu-dossier ul a:hover {
-    background: #fff;
+main .contenu-dossier ul li:hover a {
     color: #2E9AFE;
+}
+
+main .contenu-dossier ul li:hover {
+    background: #fff;
 }
 
 main .contenu-dossier ul .line-file:hover ul li:first-of-type {
     display: block;
+}
+
+main .contenu-dossier .delete-file:hover {
+    color: red;
+}
+
+main .contenu-dossier .delete-file:focus {
+    border: none;
+    outline: none;
 }
 
 .drop-state-hover {
@@ -277,11 +289,24 @@ main .dossier-principal ul i {
 /*****************
 CONTENU DOSSIER
 ***********/
+main .contenu-dossier ul .line-file {
+    box-sizing: border-box;
+    display: block;
+/*background: purple;*/
+}
 
 main .contenu-dossier ul .line-file > a {
     box-sizing: border-box;
-    display: block;
+    display: inline-block;
+    max-width: 100%;
     padding: 5px 15px;
+/*background: red;*/
+}
+
+main .contenu-dossier .delete-file {
+    padding: 0 10px;
+    border: none;
+    background: none;
 }
 
 main .contenu-dossier > ul > li {
