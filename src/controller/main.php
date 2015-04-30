@@ -28,6 +28,7 @@ final class MainController extends Controller
 			'content' => $this->twig->render('directory.html.twig', array(
 					'actualDir' => basename($dir) . '/',
 					'chemin' => realpath($dir) . '/',
+					'pathTree' => preg_replace('/([\w\d\s_-])\//', '$1 > ', $dir),
 					'parentPath' => dirname($dir),
 					'filesDirectory' => $filesDirectory,
 					'msgInfo' => $this->session['messagesInformations'],
@@ -174,5 +175,46 @@ final class MainController extends Controller
 		}
 
 		return $this->directoryAction();
+	}
+
+	public function uploadAction()
+	{
+		$arrayType = [
+			
+		];
+
+		foreach ($this->files as $file) {
+
+			for ($i=0; $i < count($file['name']); $i++) { 
+				
+				if ($file['size'][$i] < pow(2048, 2)) {
+
+					if (!in_array($file['type'][$i], $arrayType)) {
+						$tmp_name = $file['tmp_name'][$i];
+						$destination = $this->actualPath . '/' . $file['name'][$i];
+
+						if (move_uploaded_file($tmp_name, $destination)) {
+							$this->messagesInformations[] =  'Upload reussi de : ' . $file['name'][$i] . "\n" . 'vers : ' . $destination;
+						}
+						else {
+							$this->messagesAlertes[] = 'Copie impossible Erreur 001 : ' . $destination;
+						}
+					}
+					else {
+						$this->messagesAlertes[] = 'Format incorrect';
+					}
+
+				}
+				else {
+					unlink($file['tmp_name'][$i]);
+					$this->messagesAlertes[] = 'Fichier trop gros';
+				}
+			}	
+		}
+
+		return array(
+			'headers' => array('Location: ?tree=' . $this->actualPath),
+			'content' => '',
+		);
 	}
 }

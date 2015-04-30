@@ -32,7 +32,7 @@
                     </li>
 
                     <li>
-                        <a href=""><i class="fa fa-upload"></i></a>
+                        <a id="upload"><i class="fa fa-upload"></i></a>
                     </li>
 
                     <li>
@@ -87,13 +87,13 @@
 
 
 
-                <h2>{{chemin}}</h2>
+                <h2>{{pathTree}}</h2>
 
                 <ul>
                     {% for file in filesDirectory %}
                         <li class="line-file">
                             {% if file.name == '..' %}
-                                <a class="draggable droppable" href="?tree={{parentPath}}" title="{{file.type}}" class="clearfix" data-url="{{chemin ~ file.name}}" data-file-name="{{file.name}}">
+                                <a class="droppable" href="?tree={{parentPath}}" title="{{file.type}}" class="clearfix" data-url="{{chemin ~ file.name}}" data-file-name="{{file.name}}">
                             {% else %}
 
                                 {% if file.type == 'directory' %}

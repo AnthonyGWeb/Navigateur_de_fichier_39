@@ -8,6 +8,12 @@ final class Routing
 			return 'move';
 		}
 
+		if (isset($get['action'])) {
+			if ($get['action'] == 'upload') {
+				return 'upload';
+			}
+		}
+
 		if (isset($get['delete'])) {
 			return 'delete';
 		}

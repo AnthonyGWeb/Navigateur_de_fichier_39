@@ -5,16 +5,19 @@ abstract class Controller
 	protected $post;
 	protected $session;
 	protected $server;
+	protected $files;
+
 	protected $routing;
 	protected $twig;
 	protected $actualPath;
 
-	public function __construct($post, $get, $session, $server)
+	public function __construct($post, $get, $session, $server, $files)
 	{
 		$this->setGet($get)
 			 ->setPost($post)
 			 ->setSession($session)
-			 ->setServer($server);
+			 ->setServer($server)
+			 ->setFiles($files);
 
 		$this->actualPath = (isset($this->get['tree'])) ? realpath($this->get['tree']) : __ROOT_DIR__ ;
 
@@ -51,6 +54,12 @@ abstract class Controller
 		return $this->server;
 	}
 
+	public function getFiles()
+	{
+		return $this->files;
+	}	
+
+
 	public function getRouting()
 	{
 		return $this->routing;
@@ -85,6 +94,12 @@ abstract class Controller
 	public function setServer(array $data)
 	{
 		$this->server = $data;
+		return $this;
+	}
+
+	public function setFiles(array $data)
+	{
+		$this->files = $data;
 		return $this;
 	}
 

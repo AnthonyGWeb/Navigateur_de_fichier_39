@@ -2,6 +2,14 @@ $(document).ready(function() {
 
 	$('a[data-link-file]').click(openFile);
 
+	$('#upload').click(function() {
+		var tree = document.location.search;
+
+		tree = tree.replace('?', '&');
+
+		$('main').prepend('<div class=""><form action="?action=upload' + tree + '" method="post" enctype="multipart/form-data"><input multiple type="file" name="filesUploaded[]"><input type="submit" value="upload"></form></div>');
+	});
+
 	$('#new-folder').click(function(){
 		var nameFolder = window.prompt('Nom du dossier :');
 		var url = document.location.href;
