@@ -7,6 +7,7 @@ abstract class Controller
 	protected $server;
 	protected $routing;
 	protected $twig;
+	protected $actualPath;
 
 	public function __construct($post, $get, $session, $server)
 	{
@@ -15,8 +16,7 @@ abstract class Controller
 			 ->setSession($session)
 			 ->setServer($server);
 
-		// $this->session['messagesInformations'] = array();
-		// $this->session['messagesAlertes'] = array();
+		$this->actualPath = (isset($this->get['tree'])) ? realpath($this->get['tree']) : __ROOT_DIR__ ;
 
 		$this->routing = new Routing();
 		$loader = new Twig_Loader_Filesystem(__ROOT_DIR__ . '/src/views/');

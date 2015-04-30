@@ -3,13 +3,17 @@ final class Routing
 {
 	public function getRoute($get)
 	{		
-		// die(var_dump($get));
+		// var_dump($get);
 		if (isset($get['moveFile'])) {
 			return 'move';
 		}
 
 		if (isset($get['delete'])) {
 			return 'delete';
+		}
+
+		if (isset($get['new_folder'])) {
+			return 'createFolder';
 		}
 
 		if (isset($get['file'])) {

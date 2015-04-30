@@ -69,7 +69,7 @@
 ********************************************************* #}
             <section class="contenu-dossier">
 
-                {# {% if msgInfo %}
+                {% if msgInfo %}
                     <div class="information">
                         {% for msg in msgInfo %}
                             <p>{{ msg }}</p>
@@ -83,7 +83,7 @@
                             <p>{{ msg }}</p>
                         {% endfor %}
                     </div>
-                {% endif %} #}
+                {% endif %}
 
 
 
@@ -92,26 +92,34 @@
                 <ul>
                     {% for file in filesDirectory %}
                         <li class="line-file">
-                            {% if file.type == 'directory' %}
-                             <a class="draggable droppable" href="?tree={{chemin ~ file.name}}" title="{{file.type}}" class="clearfix" data-url="{{chemin ~ file.name}}" data-file-name="{{file.name}}">
+                            {% if file.name == '..' %}
+                                <a class="draggable droppable" href="?tree={{parentPath}}" title="{{file.type}}" class="clearfix" data-url="{{chemin ~ file.name}}" data-file-name="{{file.name}}">
                             {% else %}
 
-                             <a class="draggable" href="" title="{{file.type}}" class="clearfix" data-link-file data-file="?file={{chemin ~ file.name}}" data-url="{{chemin ~ file.name}}" data-file-name="{{file.name}}">
-                            {% endif %}
-                           
-                                {% include 'icone.html.twig' %}
-                                {{file.name}}
-                            </a>
+                                {% if file.type == 'directory' %}
+                                 <a class="draggable droppable" href="?tree={{chemin ~ file.name}}" title="{{file.type}}" class="clearfix" data-url="{{chemin ~ file.name}}" data-file-name="{{file.name}}">
+                                {% else %}
 
-                            <ul class="file-info clearfix">
-                             <li>
-                                <button class="delete-file" data-url="{{chemin ~ file.name}}">
-                                    <i class="fa fa-trash-o"></i>
-                                </button>{# 
-                                <a class="delete-file" href="" data-url="{{chemin ~ file.name}}"><i class="fa fa-trash-o"></i></a> #}</li>
-                                <li>{{file.time}}</li>
-                                <li>{{file.size}}</li>
-                            </ul>
+                                 <a class="draggable" href="" title="{{file.type}}" class="clearfix" data-link-file data-file="?file={{chemin ~ file.name}}" data-url="{{chemin ~ file.name}}" data-file-name="{{file.name}}">
+                                {% endif %}
+
+                            {% endif %}
+                               
+                                    {% include 'icone.html.twig' %}
+                                    {{file.name}}
+                                </a>
+
+                                <ul class="file-info clearfix">
+                                {% if file.name != '..' %}
+                                 <li>
+                                    <button class="delete-file" data-url="{{chemin ~ file.name}}">
+                                        <i class="fa fa-trash-o"></i>
+                                    </button>{# 
+                                    <a class="delete-file" href="" data-url="{{chemin ~ file.name}}"><i class="fa fa-trash-o"></i></a> #}</li>
+                                    <li>{{file.time}}</li>
+                                    <li>{{file.size}}</li>
+                                {% endif %}
+                                </ul>
                         </li>
                     {% endfor %}
                 </ul>                

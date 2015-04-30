@@ -2,56 +2,40 @@
 final class MainController extends Controller
 {
 	private $headers = array('Content-Type: text/html; charset=utf-8');
-	// private $messagesInformations = array();
-	// private $messagesAlertes = array();
+	private $messagesInformations = array();
+	private $messagesAlertes = array();
 
 	public function __destruct() {
 
-		// $_SESSION['messagesInformations'] = $this->session['messagesInformations'];
+		$_SESSION['messagesInformations'] = $this->messagesInformations;
+		$_SESSION['messagesAlertes'] = $this->messagesAlertes;
 	}
 
 	public function directoryAction()
 	{
-
 		/*******************************************
 					Repertoire courant
 		*******************************************/
-		$dir = (isset($this->get['tree'])) ? $this->get['tree'] : __ROOT_DIR__ ;
-		
-		/*******************************************
-				Creation d'un nouveau dossier
-		*******************************************/
-		if (isset($this->get['new_folder'])) {
-
-			$pathFolder = $dir . '/' . $this->get['new_folder'];
-
-			if (File::createFolder($pathFolder)) {
-				// $this->messagesInformations[] = 'Dossier : ' . $this->get['new_folder'] . ' crée'; 
-			}
-			else {
-				// $this->messagesAlertes[] = 'Impossible de créer le dossier : ' . $this->get['new_folder'];
-			}
-		}
-
+		$dir = $this->actualPath;
 
 		/*******************************************
 					
 		*******************************************/
 		$filesDirectory = $this->getFilesDirectory($dir);
-
-// var_dump($this->session['messagesInformations']);
-// die(var_dump($this->session['messagesInformations']));
 		
 		$result = array(
 			'headers' => $this->headers,
 			'content' => $this->twig->render('directory.html.twig', array(
 					'actualDir' => basename($dir) . '/',
 					'chemin' => realpath($dir) . '/',
+					'parentPath' => dirname($dir),
 					'filesDirectory' => $filesDirectory,
+					'msgInfo' => $this->session['messagesInformations'],
+					'msgAlert' => $this->session['messagesAlertes'],
 				)),
 		);
 
-		$this->session['messagesInformations'] = array();
+		//$this->session['messagesInformations'] = array();
 
 		return $result;
 	}
@@ -138,20 +122,20 @@ final class MainController extends Controller
 			if (is_dir($this->get['delete'])) {
 
 				if (rmdir($this->get['delete'])) {
-					// $this->session['messagesInformations'][] = "Dossier suprimé";
+					$this->messagesInformations[] = "Dossier suprimé";
 				}
 				else {
-					// $this->messagesAlertes[] = "Impossible de supprimer le dossier";
+					$this->messagesAlertes[] = "Impossible de supprimer le dossier";
 				}
 
 			}
 			else {
 
 				if (unlink($this->get['delete'])) {
-					// $this->session['messagesInformations'][] = "Fichier suprimé"; 
+					$this->messagesInformations[] = "Fichier suprimé"; 
 				}
 				else {
-					// $this->messagesAlertes[] = "Impossible de supprimer le fichier";
+					$this->messagesAlertes[] = "Impossible de supprimer le fichier";
 				}
 			}
 			
@@ -170,5 +154,25 @@ final class MainController extends Controller
 			$result = File::moveFile($this->post['oldPath'], $this->post['destination']);
 			// var_dump($result);
 		}
+	}
+
+	public function createFolderAction()
+	{
+		/*******************************************
+				Creation d'un nouveau dossier
+		*******************************************/
+		if (isset($this->get['new_folder'])) {
+
+			$pathFolder = $this->actualPath . '/' . $this->get['new_folder'];
+
+			if (File::createFolder($pathFolder)) {
+				$this->messagesInformations[] = 'Dossier : ' . $this->get['new_folder'] . ' crée'; 
+			}
+			else {
+				$this->messagesAlertes[] = 'Impossible de créer le dossier : ' . $this->get['new_folder'];
+			}
+		}
+
+		return $this->directoryAction();
 	}
 }

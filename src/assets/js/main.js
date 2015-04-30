@@ -5,16 +5,19 @@ $(document).ready(function() {
 	$('#new-folder').click(function(){
 		var nameFolder = window.prompt('Nom du dossier :');
 		var url = document.location.href;
+		var tree = document.location.search;
 
-// console.log(typeof nameFolder);
+		tree = tree.replace('?', '&');
 
 		if (nameFolder != null) {
-			if (url.match(/\?/)) {
-				$(location).attr('href', url + '&new_folder=' + nameFolder);
-			}
-			else {
-				$(location).attr('href', url + '?new_folder=' + nameFolder);
-			}
+
+			$.ajax({
+				type: 'GET',
+				url: '?new_folder=' + nameFolder + tree,
+				success: function() {
+					$(location).attr('href', url);
+				}
+			});
 		}
 	});
 
