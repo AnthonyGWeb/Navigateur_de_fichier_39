@@ -101,11 +101,11 @@ final class MainController extends Controller
 					'children' => false,
 				);
 
-				// if ($type == 'directory' && 
-				// 	$file['name'] != '..') {
-				// 	//echo 'fichier : ' . $file['name'] . '<br>';
-				// 	//$file['children'] = $this->getFilesDirectory($dir . '/' . $file['name']);
-				// }
+				if ($type == 'directory' && 
+					$file['name'] != '..') {
+
+					$file['size'] = File::formatSizeFolder($this->getSizeFolder($dir . '/' . $file['name']));
+				}
 
 			} else {
 				unset($filesDirectory[$key]);
@@ -116,6 +116,29 @@ final class MainController extends Controller
 		return $filesDirectory;
 	}
 
+	private function getSizeFolder($folder)
+	{
+		/**************************************
+		Récuperer la taille compléte d'un folder
+		**************************************/
+		$files = scandir($folder);
+		$size = 4096;
+
+		foreach ($files as $file) {
+
+			$filePath = $folder . '/' . $file;
+
+			if (is_dir($filePath)
+				&& !preg_match('/^\./', $file)) {
+				$size += $this->getSizeFolder($filePath);
+			}
+
+			$size += File::fileSize($folder . '/' . $file);
+		}
+
+		return $size;
+	}
+
 	public function deleteAction()
 	{
 		if (isset($this->get['delete'])) {
@@ -123,20 +146,20 @@ final class MainController extends Controller
 			if (is_dir($this->get['delete'])) {
 
 				if (rmdir($this->get['delete'])) {
-					$this->messagesInformations[] = "Dossier suprimé";
+					$this->messagesInformations[] = $this->get['delete'] . 'suprimé';
 				}
 				else {
-					$this->messagesAlertes[] = "Impossible de supprimer le dossier";
+					$this->messagesAlertes[] = 'Impossible de supprimer ' . $this->get['delete'];
 				}
 
 			}
 			else {
 
 				if (unlink($this->get['delete'])) {
-					$this->messagesInformations[] = "Fichier suprimé"; 
+					$this->messagesInformations[] = 'Fichier ' . $this->get['delete'] . ' suprimé'; 
 				}
 				else {
-					$this->messagesAlertes[] = "Impossible de supprimer le fichier";
+					$this->messagesAlertes[] = 'Impossible de supprimer' . $this->get['delete'];
 				}
 			}
 			
