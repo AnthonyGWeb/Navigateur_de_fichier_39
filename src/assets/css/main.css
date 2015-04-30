@@ -169,6 +169,7 @@ body {
 main {
     width: 100%;
     height: 100%;
+    padding-top: 50px;
     position: fixed;
 }
 
@@ -185,19 +186,16 @@ main nav {
     box-sizing: border-box;
     width: 30%;
     height: 100%;
-    padding-top: 50px;
 }
 
 .contenu-dossier {
     box-sizing: border-box;
     width: 70%;
     height: 100%;
-    padding-top: 50px;
 }
 
 main section {
     float: left;
-    overflow: auto;
     padding: 0 10px 50px 10px;    
 }
 
@@ -275,6 +273,20 @@ main nav ul li a {
     margin: 0 2px;
 }
 
+main nav #new-folder {
+    position: relative;
+}
+
+main nav #new-folder::before {
+    content: '+';
+    display: block;
+    position: absolute;
+    top: -10px;
+    left: 0;
+    z-index: 15;
+    color: #4ECCC3;
+}
+
 /*****************
 DOSIEER PRINCIPAL
 ************/
@@ -289,10 +301,13 @@ main .dossier-principal ul i {
 /*****************
 CONTENU DOSSIER
 ***********/
+main .contenu-dossier > ul {
+    max-height: 80%;
+    overflow: auto;
+}
 main .contenu-dossier ul .line-file {
     box-sizing: border-box;
     display: block;
-/*background: purple;*/
 }
 
 main .contenu-dossier ul .line-file > a {
@@ -300,7 +315,6 @@ main .contenu-dossier ul .line-file > a {
     display: inline-block;
     min-width: 50%;
     padding: 5px 15px;
-/*background: red;*/
 }
 
 main .contenu-dossier .delete-file {
