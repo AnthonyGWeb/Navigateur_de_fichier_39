@@ -21,6 +21,10 @@ final class MainController extends Controller
 		/*******************************************
 					
 		*******************************************/
+		$this->session['messagesInformations'] = (!isset($this->session['messagesInformations'])) ? null : $this->session['messagesInformations'];
+
+		$this->session['messagesAlertes'] = (!isset($this->session['messagesAlertes'])) ? null : $this->session['messagesAlertes'];
+
 		$filesDirectory = $this->getFilesDirectory($dir);
 		
 		$result = array(
@@ -159,7 +163,7 @@ final class MainController extends Controller
 					$this->messagesInformations[] = 'Fichier ' . $this->get['delete'] . ' suprimé'; 
 				}
 				else {
-					$this->messagesAlertes[] = 'Impossible de supprimer' . $this->get['delete'];
+					$this->messagesAlertes[] = 'Impossible de supprimer ' . $this->get['delete'];
 				}
 			}
 			
