@@ -79,6 +79,13 @@ a {
 #DFE5E6 creme
 #4ECCC3 turquoise
 *****/
+h2 {
+    background: #fff;
+    color: #4ECCC3;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
 main nav {
     background: #1A2732;
 }
@@ -150,6 +157,15 @@ main .contenu-dossier .delete-file:focus {
 
 .drop-state-active {
     color: #2E9AFE;
+}
+
+main .dossier-principal ul > ul > li:hover {
+    background: #DFE5E6;
+    color: #4ECCC3;
+}
+
+main .dossier-principal ul > ul > li a:hover {
+    color: #4ECCC3;
 }
 
 /*****************************************************
@@ -288,7 +304,7 @@ main nav #new-folder::before {
 }
 
 /*****************
-DOSIEER PRINCIPAL
+DOSSIER PRINCIPAL
 ************/
 main .dossier-principal ul {
     padding-left: 20px;
@@ -298,9 +314,18 @@ main .dossier-principal ul i {
     padding-right: 10px;
 }
 
+main .dossier-principal ul > ul > li a {
+    display: inline-block;
+    width: 70%;
+}
+
 /*****************
 CONTENU DOSSIER
 ***********/
+h2 {
+    text-indent: 20px;
+}
+
 main .contenu-dossier > ul {
     max-height: 80%;
     overflow: auto;
