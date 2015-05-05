@@ -1,7 +1,13 @@
+/*********************************************************
+					READY DOM
+*********************************************************/
 $(document).ready(function() {
 
 	$('a[data-link-file]').click(openFile);
 
+	/********************************************
+					Event d'upload
+	********************************************/
 	$('#upload').click(function() {
 		var tree = document.location.search;
 
@@ -10,6 +16,9 @@ $(document).ready(function() {
 		$('main').prepend('<div class=""><form action="?action=upload' + tree + '" method="post" enctype="multipart/form-data"><input multiple type="file" name="filesUploaded[]"><input type="submit" value="upload"></form></div>');
 	});
 
+	/*********************************************
+				Event create new folder
+	*********************************************/
 	$('#new-folder').click(function(){
 		var nameFolder = window.prompt('Nom du dossier :');
 		var url = document.location.href;
@@ -29,6 +38,9 @@ $(document).ready(function() {
 		}
 	});
 
+	/*********************************************
+				Event delete file
+	*********************************************/
 	$('.delete-file').click(function() {
 		
 		var link = $(this).data('url');
@@ -51,6 +63,11 @@ $(document).ready(function() {
 	dragAndDrop();
 
 });
+
+/*******************************************************
+********************************************************
+********************************************************
+*******************************************************/
 
 
 /******************************************************
