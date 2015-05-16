@@ -58,7 +58,17 @@ $(document).ready(function() {
 			});
 		}
 	});
-	
+
+	/*********************************************
+				Affichage des flashbags
+	*********************************************/
+	$('.information').click(function() {
+		$('.information').fadeOut(2000);
+	});
+
+	$('.error').click(function() {
+		$('.error').fadeOut(2000);
+	});
 
 	dragAndDrop();
 
