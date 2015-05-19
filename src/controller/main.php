@@ -78,7 +78,12 @@ final class MainController extends Controller
 				/*************************************
 				  Definition de la taille du fichier
 				*************************************/
-				$size = File::formatSize($dirFileAbsolute);
+				if ($file != '..') {
+					$size = File::formatSize($dirFileAbsolute);
+				}
+				else {
+					$size = 0;
+				}
 
 				/*************************************
 					Definition du type de fichier
@@ -105,12 +110,6 @@ final class MainController extends Controller
 					'children' => false,
 				);
 
-				if ($type == 'directory' && 
-					$file['name'] != '..') {
-
-					$file['size'] = File::formatSizeFolder($this->getSizeFolder($dir . '/' . $file['name']));
-				}
-
 			} else {
 				unset($filesDirectory[$key]);
 			}
@@ -118,29 +117,6 @@ final class MainController extends Controller
 
 		 //die(var_dump($file));
 		return $filesDirectory;
-	}
-
-	private function getSizeFolder($folder)
-	{
-		/**************************************
-		Récuperer la taille compléte d'un folder
-		**************************************/
-		$files = scandir($folder);
-		$size = 4096;
-
-		foreach ($files as $file) {
-
-			$filePath = $folder . '/' . $file;
-
-			if (is_dir($filePath)
-				&& !preg_match('/^\./', $file)) {
-				$size += $this->getSizeFolder($filePath);
-			}
-
-			$size += File::fileSize($folder . '/' . $file);
-		}
-
-		return $size;
 	}
 
 	public function deleteAction()
