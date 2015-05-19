@@ -1,23 +1,34 @@
 <?php
 abstract class File
 {
-
-	/*************************************
-	  Formatage de la taille d'un fichier
-	*************************************/
-	static function formatSize($file)
+	/**
+	 *
+	 *	Define size file
+	 *
+	 * @param string $file // path file absolute
+	 *
+	 * @return string $size // Size file
+	 */
+	static function fileSize($file)
 	{
-		$command = 'du -h ' . $file;
+		// Execute command 'du'
+		$command = 'du -h \'' . $file . '\'';
 		$retourCommand = exec($command);
 
+		// Return only size and format
 		$size = preg_replace('/\s\/+.*/', '', $retourCommand);
 
 		return $size;
 	}
 
-	/*************************************
-		Retourne le type d'un fichier
-	*************************************/
+	/**
+	 *
+	 * Return the type file
+	 *
+	 * @param string $file // path file absolute
+	 *
+	 * @return string $type // Type file
+	 */
 	static function fileType($file)
 	{
 		$type = null;
@@ -30,9 +41,14 @@ abstract class File
 		return $type;
 	}
 
-	/*************************************
-			CREATION D UN FICHIER
-	*************************************/
+	/**
+	 *
+	 * Create a new folder
+	 *
+	 * @param string $nameFolder // Name for the new folder
+	 *
+	 * @return boolean
+	 */
 	static function createFolder($nameFolder)
 	{
 		if (mkdir($nameFolder, 0744)) {
@@ -42,14 +58,19 @@ abstract class File
 		return false;
 	}
 
-	/*************************************
-		Deplacement D UN FICHIER ou dossier
-	*************************************/
+	/**
+	 *
+	 * Move folder or file
+	 *
+	 * @param string $old // path old file
+	 * @param string $new // path new file
+	 *
+	 * @return boolean
+	 */
 	static function moveFile($old, $new)
 	{
 		if (rename($old, $new)) {
 			return true;
-
 		}
 
 		return false;

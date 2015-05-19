@@ -79,7 +79,7 @@ final class MainController extends Controller
 				  Definition de la taille du fichier
 				*************************************/
 				if ($file != '..') {
-					$size = File::formatSize($dirFileAbsolute);
+					$size = File::fileSize($dirFileAbsolute);
 				}
 				else {
 					$size = 0;
