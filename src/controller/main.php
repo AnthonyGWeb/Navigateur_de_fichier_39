@@ -115,7 +115,6 @@ final class MainController extends Controller
 			}
 		}
 
-		 //die(var_dump($file));
 		return $filesDirectory;
 	}
 
@@ -125,13 +124,19 @@ final class MainController extends Controller
 
 			if (is_dir($this->get['delete'])) {
 
-				if (rmdir($this->get['delete'])) {
-					$this->messagesInformations[] = $this->get['delete'] . 'suprimé';
+				$command = 'rm -R -v ' . $this->get['delete'];
+
+				exec($command, $outputArray);
+
+				if (count($outputArray) !== 0) {
+
+					foreach ($outputArray as $output) {
+					$this->messagesInformations[] = $output;
+					}
 				}
 				else {
 					$this->messagesAlertes[] = 'Impossible de supprimer ' . $this->get['delete'];
 				}
-
 			}
 			else {
 
@@ -142,10 +147,7 @@ final class MainController extends Controller
 					$this->messagesAlertes[] = 'Impossible de supprimer ' . $this->get['delete'];
 				}
 			}
-			
 		}
-
-		//return $this->directoryAction();
 	}
 
 	public function moveAction()
