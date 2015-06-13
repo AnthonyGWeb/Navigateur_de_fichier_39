@@ -1,5 +1,7 @@
 <?php
-define ('__ROOT_DIR__', realpath(dirname(__FILE__)));
+
+define('__HOME__', preg_filter('/\?.*/', '', $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI']));
+define('__ROOT_DIR__', realpath(dirname(__FILE__)));
 
 require_once __ROOT_DIR__ . '/src/model/controller.php';
 require_once __ROOT_DIR__ . '/src/model/routing.php';

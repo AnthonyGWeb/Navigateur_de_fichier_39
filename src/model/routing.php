@@ -1,6 +1,14 @@
 <?php
 final class Routing
 {
+	/**
+	 * Routing
+	 *
+	 * @param array $get // Calling route.
+	 *
+	 * @return string
+	 *
+	 */
 	public function getRoute($get)
 	{		
 		// var_dump($get);

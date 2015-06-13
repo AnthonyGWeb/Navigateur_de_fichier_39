@@ -31,6 +31,7 @@ final class MainController extends Controller
 			'headers' => $this->headers,
 			'content' => $this->twig->render('directory.html.twig', array(
 					'actualDir' => basename($dir) . '/',
+					'home' => __HOME__,
 					'chemin' => realpath($dir) . '/',
 					'pathTree' => preg_replace('/([\w\d\s_-])\//', '$1 > ', $dir),
 					'parentPath' => dirname($dir),
