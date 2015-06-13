@@ -83,7 +83,7 @@ final class MainController extends Controller
 					$size = File::fileSize($dirFileAbsolute);
 				}
 				else {
-					$size = 0;
+				 	$size = 0;
 				}
 
 				/*************************************
